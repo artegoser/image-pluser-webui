@@ -1,98 +1,34 @@
-import datetime
 import gradio as gr
-from PIL import Image, ImageChops
+from processing.stacking import stacking
+import sys
+import importlib
+import pathlib
 import os
-from tqdm import tqdm
+import copy
+from tabs import tabs
+
+tabs_dir = pathlib.Path(__file__).parent / "tabs"
 
 
-def impluser(dir, method):
+all_tabs = []
+tab = None
+for tab_name in tabs:
+    old_path = copy.deepcopy(sys.path)
+    sys.path = [os.path.join(tabs_dir, tab_name)] + sys.path
+    try:
+        if tab is None:
+            tab = importlib.import_module(f"app")
+        else:
+            tab = importlib.reload(tab)
+        all_tabs.append((tab_name, tab.app))
 
-    files = os.listdir(dir)
-    files = list(map(lambda x: os.path.join(dir, x), files))
-    files = list(filter(lambda x: x.endswith(".png"), files))
-
-    if method == "denoise":
-        img = denoise(files)
-    elif method == "startracks":
-        img = startracks(files)
-    elif method == "noise extractor":
-        img = noise_extractor(files)
-    elif method == "untrack":
-        img = untrack(files)
-
-    name = generate_name()
-    img.save(name)
-
-    return [name]
-
-
-def generate_name():
-    # if not exists output create it
-    if not os.path.exists("./output"):
-        os.mkdir("./output")
-
-    return f"./output/{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.png"
-
-
-def denoise(files):
-    bias = 1
-    image = Image.open(files[0])
-    for file in tqdm(files):
-
-        alpha = 1/bias
-
-        im2 = Image.open(file)
-        im3 = Image.blend(image, im2, alpha)
-
-        image = im3
-
-        bias += 1
-
-    return image
-
-
-def startracks(files):
-    image = Image.open(files[0])
-    for file in tqdm(files):
-        im2 = Image.open(file)
-        im3 = ImageChops.lighter(image, im2)
-        image = im3
-
-    return image
-
-
-def noise_extractor(files):
-    image = Image.open(files[0])
-    for file in tqdm(files, unit=' images'):
-        im2 = Image.open(file)
-        im3 = ImageChops.difference(image, im2)
-        image = im3
-
-    return image
-
-
-def untrack(files):
-    image = Image.open(files[0])
-    for file in tqdm(files, unit=' images'):
-        im2 = Image.open(file)
-        im3 = ImageChops.darker(image, im2)
-        image = im3
-
-    return image
-
+    except Exception as e:
+        print(f"Error loading tab ({tab_name}): {e}")
 
 with gr.Blocks() as app:
-    with gr.Row():
-        with gr.Column():
-            directory = gr.Textbox(
-                placeholder="A directory on the same machine where the server is running.", lines=1, label="Directory")
-            methods = gr.Dropdown(
-                choices=["denoise", "startracks", "noise extractor", "untrack"], value="denoise", label="Method")
-            submit = gr.Button("Submit")
+    for tab_name, tab in all_tabs:
+        with gr.Tab(tab_name):
+            tab.render()
 
-        with gr.Column():
-            output = gr.Gallery()
-
-        submit.click(impluser, inputs=[directory, methods], outputs=[output])
 
 app.launch()
