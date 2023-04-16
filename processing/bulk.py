@@ -1,7 +1,8 @@
-from PIL import Image, ImageFilter
+
 import ffmpeg
 import os
-from processing.utils import generate_name, get_date_text
+from processing.utils import generate_name, get_date_text, generate_name_with_file_name
+from methods.bulk_methods import canny_edge
 
 
 def images_to_video(directory, fps, img_ext, img_name_format, video_name, video_ext, video_dir):
@@ -23,3 +24,16 @@ def video_to_images(video_path, img_ext):
         extension=img_ext, name=f"%d", subfolder=os.path.join("images", get_date_text()))
 
     ffmpeg.input(video_path).output(images_pattern).run()
+
+
+def bulk_processing(directory, out_directory, method):
+    date = get_date_text()
+    if method == "canny edge":
+        for file in os.listdir(directory):
+            img = canny_edge(os.path.join(directory, file))
+            if out_directory:
+                img_out_path = os.path.join(out_directory, file)
+            else:
+                img_out_path = generate_name_with_file_name(
+                    name=file, subfolder=os.path.join("images", date))
+            img.save(img_out_path)
