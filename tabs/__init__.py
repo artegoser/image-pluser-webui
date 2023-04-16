@@ -1,6 +1,1 @@
-tabs = [
-    "Stacking",
-    "Bulk processing",
-    "Images to video",
-    "Video to images"
-]
+tabs = ["Stacking", "Bulk processing", "Images to video", "Video to images"]

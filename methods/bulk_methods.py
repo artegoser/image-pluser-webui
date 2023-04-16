@@ -1,7 +1,7 @@
 from PIL import Image, ImageFilter
 
 
-def canny_edge(file_name):
+def edge(file_name):
     image = Image.open(file_name)
 
     image = image.convert("L")

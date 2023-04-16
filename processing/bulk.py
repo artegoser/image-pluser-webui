@@ -1,35 +1,38 @@
-
 import ffmpeg
 import os
 from processing.utils import generate_name, get_date_text, generate_name_with_file_name
-from methods.bulk_methods import canny_edge, sharpen
+from methods.bulk_methods import edge, sharpen
 
 
-def images_to_video(directory, fps, img_ext, img_name_format, video_name, video_ext, video_dir):
+def images_to_video(
+    directory, fps, img_ext, img_name_format, video_name, video_ext, video_dir
+):
     images_pattern = os.path.join(directory, f"{img_name_format}.{img_ext}")
 
     if video_dir:
         video_path = os.path.join(video_dir, f"{video_name}.{video_ext}")
     else:
         video_path = generate_name(
-            extension=video_ext, name=video_name, subfolder="videos")
+            extension=video_ext, name=video_name, subfolder="videos"
+        )
 
-    ffmpeg.input(images_pattern,
-                 framerate=fps).output(video_path, pix_fmt='yuv420p').global_args("-y").run()
+    ffmpeg.input(images_pattern, framerate=fps).output(
+        video_path, pix_fmt="yuv420p"
+    ).global_args("-y").run()
 
 
 def video_to_images(video_path, img_ext):
-
     images_pattern = generate_name(
-        extension=img_ext, name=f"%d", subfolder=os.path.join("images", get_date_text()))
+        extension=img_ext, name=f"%d", subfolder=os.path.join("images", get_date_text())
+    )
 
     ffmpeg.input(video_path).output(images_pattern).run()
 
 
 def bulk_processing(directory, out_directory, method):
     date = get_date_text()
-    if method == "canny edge":
-        run_bulk(canny_edge, directory, out_directory, date)
+    if method == "Edge detection":
+        run_bulk(edge, directory, out_directory, date)
     elif method == "sharpen":
         run_bulk(sharpen, directory, out_directory, date)
 
@@ -41,5 +44,6 @@ def run_bulk(func, directory, out_directory, date):
             img_out_path = os.path.join(out_directory, file)
         else:
             img_out_path = generate_name_with_file_name(
-                name=file, subfolder=os.path.join("images", date))
+                name=file, subfolder=os.path.join("images", date)
+            )
         img.save(img_out_path)

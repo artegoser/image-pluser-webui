@@ -4,7 +4,6 @@ from processing.utils import generate_name
 
 
 def stacking(dir, method):
-
     files = os.listdir(dir)
     files = list(map(lambda x: os.path.join(dir, x), files))
     files = list(filter(lambda x: x.endswith(".png"), files))
