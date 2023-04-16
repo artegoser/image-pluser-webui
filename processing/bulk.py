@@ -18,7 +18,8 @@ def images_to_video(directory, fps, img_ext, img_name_format, video_name, video_
 
 
 def video_to_images(video_path, img_ext):
+
     images_pattern = generate_name(
-        extension=img_ext, name=video_path, subfolder=os.path.join("images", get_date_text()))
+        extension=img_ext, name=f"%d", subfolder=os.path.join("images", get_date_text()))
 
     ffmpeg.input(video_path).output(images_pattern).run()
