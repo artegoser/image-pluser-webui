@@ -9,7 +9,7 @@ with gr.Blocks() as app:
             directory = gr.Text(
                 placeholder="A directory with many images.", lines=1, label="Directory")
             method = gr.Dropdown(
-                choices=["canny edge"], value="canny edge", label="Method")
+                choices=["canny edge", "sharpen"], value="canny edge", label="Method")
 
             with gr.Accordion("Advanced settings", open=False) as acc:
                 out_dir = gr.Text(

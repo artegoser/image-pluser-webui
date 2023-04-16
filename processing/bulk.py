@@ -2,7 +2,7 @@
 import ffmpeg
 import os
 from processing.utils import generate_name, get_date_text, generate_name_with_file_name
-from methods.bulk_methods import canny_edge
+from methods.bulk_methods import canny_edge, sharpen
 
 
 def images_to_video(directory, fps, img_ext, img_name_format, video_name, video_ext, video_dir):
@@ -29,11 +29,17 @@ def video_to_images(video_path, img_ext):
 def bulk_processing(directory, out_directory, method):
     date = get_date_text()
     if method == "canny edge":
-        for file in os.listdir(directory):
-            img = canny_edge(os.path.join(directory, file))
-            if out_directory:
-                img_out_path = os.path.join(out_directory, file)
-            else:
-                img_out_path = generate_name_with_file_name(
-                    name=file, subfolder=os.path.join("images", date))
-            img.save(img_out_path)
+        run_bulk(canny_edge, directory, out_directory, date)
+    elif method == "sharpen":
+        run_bulk(sharpen, directory, out_directory, date)
+
+
+def run_bulk(func, directory, out_directory, date):
+    for file in os.listdir(directory):
+        img = func(os.path.join(directory, file))
+        if out_directory:
+            img_out_path = os.path.join(out_directory, file)
+        else:
+            img_out_path = generate_name_with_file_name(
+                name=file, subfolder=os.path.join("images", date))
+        img.save(img_out_path)
