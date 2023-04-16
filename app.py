@@ -23,7 +23,7 @@ for tab_name in tabs:
         all_tabs.append((tab_name, tab.app))
 
     except Exception as e:
-        print(f"Error loading tab: {e}")
+        print(f"Error loading tab ({tab_name}): {e}")
 
 with gr.Blocks() as app:
     for tab_name, tab in all_tabs:

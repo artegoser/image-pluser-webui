@@ -1,12 +1,6 @@
 from methods.stack_methods import denoise, startracks, noise_extractor, untrack
 import os
-import datetime
-
-
-def generate_name():
-    os.makedirs("./output/stacked", exist_ok=True)
-
-    return f"./output/stacked/{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.png"
+from processing.utils import generate_name
 
 
 def stacking(dir, method):
