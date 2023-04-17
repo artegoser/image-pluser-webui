@@ -1,21 +1,11 @@
 from PIL import Image, ImageChops
 from tqdm import tqdm
+import numpy as np
 
 
 def denoise(files):
-    bias = 1
-    image = Image.open(files[0])
-    for file in tqdm(files):
-        alpha = 1 / bias
-
-        im2 = Image.open(file)
-        im3 = Image.blend(image, im2, alpha)
-
-        image = im3
-
-        bias += 1
-
-    return image
+    images = [np.asarray(Image.open(file)) for file in tqdm(files)]
+    return Image.fromarray(np.uint8(np.mean(images, axis=0)))
 
 
 def startracks(files):
