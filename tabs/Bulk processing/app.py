@@ -11,7 +11,9 @@ with gr.Blocks() as app:
                 placeholder="A directory with many images.", lines=1, label="Directory"
             )
             method = gr.Dropdown(
-                choices=["canny edge", "sharpen"], value="canny edge", label="Method"
+                choices=["Edge detection", "Canny edge detection", "sharpen"],
+                value="Sharpen",
+                label="Method",
             )
 
             with gr.Accordion("Advanced settings", open=False) as acc:
