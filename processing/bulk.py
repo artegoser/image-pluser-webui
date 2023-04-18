@@ -1,7 +1,7 @@
 import ffmpeg
 import os
 from processing.utils import generate_name, get_date_text, generate_name_with_file_name
-from methods.bulk_methods import edge, sharpen, canny_edge
+from methods.bulk_methods import methods_funcs
 
 
 def images_to_video(
@@ -31,12 +31,7 @@ def video_to_images(video_path, img_ext):
 
 def bulk_processing(directory, out_directory, method):
     date = get_date_text()
-    if method == "Edge detection":
-        run_bulk(edge, directory, out_directory, date)
-    elif method == "Canny edge detection":
-        run_bulk(canny_edge, directory, out_directory, date)
-    elif method == "Sharpen":
-        run_bulk(sharpen, directory, out_directory, date)
+    run_bulk(methods_funcs[method], directory, out_directory, date)
 
 
 def run_bulk(func, directory, out_directory, date):

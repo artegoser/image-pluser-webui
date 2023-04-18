@@ -1,5 +1,6 @@
 import gradio as gr
 from processing.bulk import bulk_processing
+from methods.bulk_methods import methods
 
 with gr.Blocks() as app:
     gr.Markdown(
@@ -11,8 +12,8 @@ with gr.Blocks() as app:
                 placeholder="A directory with many images.", lines=1, label="Directory"
             )
             method = gr.Dropdown(
-                choices=["Edge detection", "Canny edge detection", "sharpen"],
-                value="Sharpen",
+                choices=methods,
+                value=methods[0],
                 label="Method",
             )
 
