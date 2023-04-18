@@ -2,6 +2,7 @@ import ffmpeg
 import os
 from processing.utils import generate_name, get_date_text, generate_name_with_file_name
 from methods.bulk_methods import methods_funcs
+from tqdm import tqdm
 
 
 def images_to_video(
@@ -30,12 +31,11 @@ def video_to_images(video_path, img_ext):
 
 
 def bulk_processing(directory, out_directory, method):
-    date = get_date_text()
-    run_bulk(methods_funcs[method], directory, out_directory, date)
+    run_bulk(methods_funcs[method], directory, out_directory, get_date_text())
 
 
 def run_bulk(func, directory, out_directory, date):
-    for file in os.listdir(directory):
+    for file in tqdm(os.listdir(directory)):
         img = func(os.path.join(directory, file))
         if out_directory:
             img_out_path = os.path.join(out_directory, file)
