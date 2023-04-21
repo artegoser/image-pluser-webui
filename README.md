@@ -6,6 +6,7 @@ Image-Pluser is a Web User Interface (WebUI) application that allows users to pr
 
 To run Image-Pluser, follow these steps:
 
+0. Install ffmpeg (only for vid2imgs and imgs2vid)
 1. Clone the repository: `git clone https://github.com/artegoser/image-pluser-webui.git`
 2. Create venv: `python -m venv venv`
 3. Install the necessary dependencies: `pip install -r requirements.txt`
@@ -14,7 +15,7 @@ To run Image-Pluser, follow these steps:
 
 ### one-click-installers
 
-Just download and run the file in `scripts/one-click` (you need git and python3).
+Just download and run the file in `scripts/one-click` (you need git, ffmpeg and python3).
 
 ## Available Stacking Methods
 
@@ -22,6 +23,17 @@ Just download and run the file in `scripts/one-click` (you need git and python3)
 2. StarTracks: Creates star tracks (the pictures should show the sky, which gradually moves)
 3. Untrack: Removes stars from the sky (pictures should not move)
 4. Noise extractor: Gets all the noise in the image (actually makes nonsense)
+
+## Available Bulk Methods
+
+1. Edge detection
+2. Canny edge detection
+3. Sharpen
+
+## Other features
+
+1. Imgs to video
+2. Video to images
 
 ## Examples
 
