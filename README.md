@@ -1,6 +1,6 @@
 # Image-Pluser WebUI Application
 
-Image-Pluser is a web user interface (WebUI) application built on top of Gradio that allows users to stack photos using different methods. The application provides a simple and intuitive interface for users to upload multiple images and combine them in various ways.
+Image-Pluser is a Web User Interface (WebUI) application that allows users to process photos and videos in a variety of ways.
 
 ## Getting Started
 
@@ -10,23 +10,24 @@ To run Image-Pluser, follow these steps:
 2. Create venv: `python -m venv venv`
 3. Install the necessary dependencies: `pip install -r requirements.txt`
 4. Run the application: `python app.py`
-5. Access the application by visiting http://localhost:7860/ in your web browser.
+5. Access the application by visiting <http://localhost:7860/> in your web browser.
 
 ### one-click-installers
 
 Just download and run the file in `scripts/one-click` (you need git and python3).
 
-# Available Methods
+## Available Stacking Methods
 
 1. Denoising: Removes noise from the image (pictures should not move)
 2. StarTracks: Creates star tracks (the pictures should show the sky, which gradually moves)
-3. Noise extractor: Gets all the noise in the image (actually makes nonsense)
-4. Untrack: Removes stars from the sky (pictures are the same as in StarTracks)
+3. Untrack: Removes stars from the sky (pictures should not move)
+4. Noise extractor: Gets all the noise in the image (actually makes nonsense)
 
-# Examples
+## Examples
 
 Denoise
 ![denoise](imgs/examples/denoise.png)
+![denoise2](imgs/examples/denoise2.png)
 
 StarTracks
 ![startracks](imgs/examples/startracks.png)
@@ -34,10 +35,10 @@ StarTracks
 Ui
 ![ui](imgs/examples/ui.png)
 
-# Contributing
+## Contributing
 
 Contributions to Image-Pluser are welcome! If you would like to contribute, please fork the repository and submit a pull request.
 
-# License
+## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
