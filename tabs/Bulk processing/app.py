@@ -3,9 +3,7 @@ from processing.bulk import bulk_processing
 from methods.bulk_methods import methods
 
 with gr.Blocks() as app:
-    gr.Markdown(
-        "Mass processing of images one at a time and saving to video if needed.   # **WIP, not working**"
-    )
+    gr.Markdown("Mass processing of images one at a time.")
     with gr.Row():
         with gr.Column():
             directory = gr.Text(

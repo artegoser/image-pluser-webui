@@ -2,8 +2,6 @@ from PIL import Image, ImageFilter
 from skimage import feature
 import numpy as np
 
-methods = ["Sharpen", "Edge detection", "Canny edge detection"]
-
 
 def edge(file_name):
     image = Image.open(file_name)
@@ -31,3 +29,5 @@ methods_funcs = {
     "Edge detection": edge,
     "Canny edge detection": canny_edge,
 }
+
+methods = list(methods_funcs.keys())

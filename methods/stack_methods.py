@@ -2,8 +2,6 @@ from PIL import Image, ImageChops
 from tqdm import tqdm
 import numpy as np
 
-methods = ["Denoise", "StarTracks", "Noise extractor", "Untrack"]
-
 
 def denoise(files):
     images = [np.asarray(Image.open(file)) for file in tqdm(files)]
@@ -46,3 +44,5 @@ methods_funcs = {
     "Noise extractor": noise_extractor,
     "Untrack": untrack,
 }
+
+methods = list(methods_funcs.keys())
