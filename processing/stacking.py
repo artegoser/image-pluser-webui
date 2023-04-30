@@ -1,6 +1,4 @@
-from methods.stack_methods import (
-    methods_funcs,
-)
+from methods.stack_methods import methods_funcs
 import os
 from processing.utils import generate_name
 
